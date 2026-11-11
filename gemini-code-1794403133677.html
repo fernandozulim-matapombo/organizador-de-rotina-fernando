@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AetherFlow - Organizador de Rotinas</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Lucide Icons para os ícones dos cards -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+    <!-- Fundo Tridimensional com Objetos Voando -->
+    <div class="bg-3d-container">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
+        <div class="shape shape-5"></div>
+    </div>
+
+    <!-- Conteúdo Principal -->
+    <div class="app-container">
+        <header class="header">
+            <h1 class="glow-text">AETHER<span>FLOW</span></h1>
+            <p>Gerencie seu tempo com equilíbrio e alta performance</p>
+        </header>
+
+        <main class="grid-container">
+            <!-- Card Estudo -->
+            <div class="card" onclick="openModal('estudo')">
+                <div class="card-inner">
+                    <i data-lucide="book-open" class="card-icon"></i>
+                    <h3>Estudo</h3>
+                    <p>Foco, aprendizado contínuo e desenvolvimento intelectual.</p>
+                    <span class="card-link">Ver detalhes &rarr;</span>
+                </div>
+            </div>
+
+            <!-- Card Trabalho -->
+            <div class="card" onclick="openModal('trabalho')">
+                <div class="card-inner">
+                    <i data-lucide="briefcase" class="card-icon"></i>
+                    <h3>Trabalho</h3>
+                    <p>Projetos, produtividade e conquistas profissionais.</p>
+                    <span class="card-link">Ver detalhes &rarr;</span>
+                </div>
+            </div>
+
+            <!-- Card Lazer -->
+            <div class="card" onclick="openModal('lazer')">
+                <div class="card-inner">
+                    <i data-lucide="tv" class="card-icon"></i>
+                    <h3>Lazer</h3>
+                    <p>Desconexão, entretenimento e descanso merecido.</p>
+                    <span class="card-link">Ver detalhes &rarr;</span>
+                </div>
+            </div>
+
+            <!-- Card Hobby -->
+            <div class="card" onclick="openModal('hobby')">
+                <div class="card-inner">
+                    <i data-lucide="palette" class="card-icon"></i>
+                    <h3>Hobby</h3>
+                    <p>Criatividade, paixões pessoais e expressão de arte.</p>
+                    <span class="card-link">Ver detalhes &rarr;</span>
+                </div>
+            </div>
+
+            <!-- Card Esportes -->
+            <div class="card" onclick="openModal('esportes')">
+                <div class="card-inner">
+                    <i data-lucide="trophy" class="card-icon"></i>
+                    <h3>Esportes</h3>
+                    <p>Superação de limites, disciplina e movimento corporal.</p>
+                    <span class="card-link">Ver detalhes &rarr;</span>
+                </div>
+            </div>
+
+            <!-- Card Saúde -->
+            <div class="card" onclick="openModal('saude')">
+                <div class="card-inner">
+                    <i data-lucide="heart-pulse" class="card-icon"></i>
+                    <h3>Saúde</h3>
+                    <p>Nutrição, bem-estar mental e qualidade de vida.</p>
+                    <span class="card-link">Ver detalhes &rarr;</span>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal Dinâmico -->
+    <div id="routine-modal" class="modal-overlay" onclick="closeModalOnOuterClick(event)">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <div id="modal-body">
+                <!-- Conteúdo inserido via JS -->
+            </div>
+            <div class="modal-actions">
+                <a id="modal-page-link" href="#" class="btn-primary">Acessar Página Completa</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Integrado -->
+    <script>
+        // Inicializar Ícones
+        lucide.createIcons();
+
+        // Dados das Rotinas para o Modal
+        const routinesData = {
+            estudo: {
+                title: "Rotina de Estudos",
+                desc: "Organização diária para leitura, cursos e aperfeiçoamento técnico.",
+                items: ["2h Leitura técnica", "1h Curso online", "Revisão Anki / Flashcards"],
+                link: "estudo.html"
+            },
+            trabalho: {
+                title: "Rotina de Trabalho",
+                desc: "Metodologias ágeis e execução com foco em entrega de valor.",
+                items: ["Check na caixa de entrada", "Blocos de Pomodoro de 50min", "Reuniões de alinhamento"],
+                link: "trabalho.html"
+            },
+            lazer: {
+                title: "Rotina de Lazer",
+                desc: "Momentos para desacelerar a mente e recarregar energias.",
+                items: ["Assistir séries/filmes", "Encontro com amigos", "Passeio ao ar livre"],
+                link: "lazer.html"
+            },
+            hobby: {
+                title: "Rotina de Hobbies",
+                desc: "Prática livre sem pressão por resultados ou metas.",
+                items: ["Tocar instrumento musical", "Fotografia de rua", "Pintura / Escrita"],
+                link: "hobby.html"
+            },
+            esportes: {
+                title: "Rotina de Esportes",
+                desc: "Fortalecimento físico e prática de exercícios estruturados.",
+                items: ["Treino de musculação", "Corrida 5k", "Alongamento diário"],
+                link: "esportes.html"
+            },
+            saude: {
+                title: "Rotina de Saúde",
+                desc: "Cuidados integrais com o corpo, alimentação e mente.",
+                items: ["Bebida de 3L de água", "Meditação guiada (15min)", "Sono regulado (8h)"],
+                link: "saude.html"
+            }
+        };
+
+        // Funções do Modal
+        function openModal(routineKey) {
+            const data = routinesData[routineKey];
+            const modal = document.getElementById('routine-modal');
+            const body = document.getElementById('modal-body');
+            const link = document.getElementById('modal-page-link');
+
+            let itemsListHtml = data.items.map(item => `<li>✔ ${item}</li>`).join('');
+
+            body.innerHTML = `
+                <h2>${data.title}</h2>
+                <p>${data.desc}</p>
+                <h4>Checklist Recomendado:</h4>
+                <ul style="text-align: left; margin-top: 10px; color: #d1d5db;">
+                    ${itemsListHtml}
+                </ul>
+            `;
+
+            link.href = data.link;
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('routine-modal').classList.remove('active');
+        }
+
+        function closeModalOnOuterClick(e) {
+            if (e.target.id === 'routine-modal') {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
